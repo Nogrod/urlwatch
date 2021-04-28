@@ -38,7 +38,7 @@ from .jobs import NotModifiedError
 
 logger = logging.getLogger(__name__)
 
-MAX_WORKERS = 10
+MAX_WORKERS = 1
 
 
 def run_parallel(func, items):

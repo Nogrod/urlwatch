@@ -38,6 +38,7 @@ import os
 import shlex
 import subprocess
 import email.utils
+import random
 
 from .filters import FilterBase
 from .jobs import NotModifiedError
@@ -97,6 +98,7 @@ class JobState(object):
 
     def process(self):
         logger.info('Processing: %s', self.job)
+        time.sleep(random.randint(1, 10))
 
         if self.exception:
             return self

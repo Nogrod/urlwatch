@@ -48,15 +48,16 @@ class BrowserLoop(object):
 
     @asyncio.coroutine
     def _launch_browser(self):
-        browser = yield from pyppeteer.launch()
-        for p in (yield from browser.pages()):
-            yield from p.close()
+        browser = yield from pyppeteer.launch({'headless': False, 'dumpio': True, 'args': ['--disable-infobars', '--devtools=false', '--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage', '--disable-accelerated-2d-canvas', '--no-first-run', '--no-zygote', '--disable-gpu', '--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.72 Safari/537.36']})
+#        for p in (yield from browser.pages()):
+#            yield from p.close()
         return browser
 
     @asyncio.coroutine
     def _get_content(self, url, wait_until=None):
         context = yield from self._browser.createIncognitoBrowserContext()
         page = yield from context.newPage()
+        yield from page.setCacheEnabled(False)
         opts = {}
         if wait_until is not None:
             opts['waitUntil'] = wait_until
